@@ -1,9 +1,22 @@
 'use strict';
 
-// alert('Hello world!');
+const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
 
-// const result = confirm("Are you here?");
-// console.log(result);
+const personalMovieDB = {
+	count: numberOfFilms,
+	movies: {},
+	actors: {},
+	genres: [],
+	privat: false
+};
 
-const answer = prompt("Вам есть 18?", " ");
-console.log(typeof(answer));
+const a = prompt('Один из последние просмотренных фильмов?', ''),
+	b = prompt('На сколько оцениваете его?', ''),
+	c = prompt('Один из последние просмотренных фильмов?', ''),
+	// eslint-disable-next-line indent
+    d = prompt('На сколько оцениваете его?', '');
+
+personalMovieDB.movies[a] = b;
+personalMovieDB.movies[c] = d;
+
+console.log(personalMovieDB);
