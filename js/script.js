@@ -1,31 +1,17 @@
 'use strict';
 
-// const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+//Third Part
 
-// const personalMovieDB = {
-// 	count: numberOfFilms,
-// 	movies: {},
-// 	actors: {},
-// 	genres: [],
-// 	privat: false
-// };
+let numberOfFilms;
 
-// const a = prompt('Один из последние просмотренных фильмов?', ''),
-// 	b = prompt('На сколько оцениваете его?', ''),
-// 	c = prompt('Один из последние просмотренных фильмов?', ''),
-// 	// eslint-disable-next-line indent
-//     d = prompt('На сколько оцениваете его?', '');
+function start () {
+	numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
 
-// personalMovieDB.movies[a] = b;
-// personalMovieDB.movies[c] = d;
-
-// console.log(personalMovieDB);
-
-//Second part
-
-//Автоматизировать вопросы пользователю с помощью цикла
-
-const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+	while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) { //если пользователь ничего не ввел или нажал отмена или ввел не число
+		numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', ''); //цикл выполняется пока одно из условий будет правдивым, тогда мы просто повторяем вопрос пользователю
+	}
+}
+start();
 
 const personalMovieDB = {
 	count: numberOfFilms,
@@ -35,30 +21,64 @@ const personalMovieDB = {
 	privat: false
 };
 
-for (let i = 0; i < 2; i++) {
-	const a = prompt('Один из последние просмотренных фильмов?', ''),
-		b = prompt('На сколько оцениваете его?', ''); 
 
-	if (a != null && b != null && a != '' && b != '' && a.length < 50) {
-		personalMovieDB.movies[a] = b;
-		console.log('done');
-	} else {
-		console.log('error');
-		i--;
+
+function rememberMyFilms() {
+	for (let i = 0; i < 2; i++) {
+		const a = prompt('Один из последние просмотренных фильмов?', ''),
+			b = prompt('На сколько оцениваете его?', ''); 
+	
+		if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+			personalMovieDB.movies[a] = b;
+			console.log('done');
+		} else {
+			console.log('error');
+			i--;
+		}
 	}
 }
 
-if (personalMovieDB.count < 10) {
-	console.log('Просмотрено довольно мало фильмов');
-} else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30 ) {
-	console.log('Вы классический зритель');
-} else if (personalMovieDB.count >= 30) {
-	console.log('Вы киноман');
-} else {
-	console.log('Произошла ошибка');
+rememberMyFilms();
+
+function detectPersonalLevel() {
+	if (personalMovieDB.count < 10) {
+		console.log('Просмотрено довольно мало фильмов');
+	} else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30 ) {
+		console.log('Вы классический зритель');
+	} else if (personalMovieDB.count >= 30) {
+		console.log('Вы киноман');
+	} else {
+		console.log('Произошла ошибка');
+	}
 }
 
-console.log(personalMovieDB);
+detectPersonalLevel();
+
+//Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции false - выводит в консоль главный объект программы
+
+function showMyDB (hidden) {
+	if (!hidden) {
+		console.log(personalMovieDB);
+	}
+}
+
+showMyDB(personalMovieDB.privat);
+
+/* Создать функцию writeYourGenres в которой пользователь будет 3 раза отвечать на вопрос 
+"Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных
+genres */
+
+function writeYourGenres() {
+	for (let i = 1; i <= 3; i ++) {
+		// const genre = prompt(`Ваш любимый жанр под номером ${i}`);
+		// personalMovieDB.genres[i-1] = genre; //начали отсчет с 1, но массив начинается с нуля, чтоб выровнять - 1
+
+		//запишем то что сверху в другом виде
+		personalMovieDB.genres[i - 1] = prompt(`Ваш любимый жанр под номером ${i}`);
+	}
+}
+
+writeYourGenres();
 
 
 //Циклы и массивы тренировка
@@ -153,4 +173,43 @@ console.log(personalMovieDB);
 // }
 
 // console.log(result)
+
+//task for lesson 27
+
+//1) Создайте функцию, которая будет на вход принимать 1 аргумент с именем человека и возвращать строку.
+
+// function sayHello(name) {
+//     return (`Привет, ${name}`);
+// }
+
+// sayHello('Alex');
+
+//Создайте функцию, которая принимает в себя 1 аргумент в виде целого числа и возвращает массив из трех чисел: одно на 1 меньше, сам аргумент, и число на 1 больше.
+
+// function returnNeighboringNumbers(num) {
+//     return [num - 1, num, num + 1];
+// }
+
+// console.log NeighboringNumbers(5);
+
+//Создайте функцию, которая будет принимать в себя 2 аргумента, оба числа. Первое число - это база, второе число - это сколько раз нужно будет повторить это число в прогрессии. (Смотри пример ниже). Функция должна возвращать строку (или число в особых случаях, о которых ниже), где эти числа идут по порядку, разделенные тремя дефисами "---". После последнего числа их не должно быть.
+
+// function getMathResult(num, time) {
+// 	if (typeof(time) !== 'number' || time <= 0) {
+// 		return num;
+// 	}
+// 	let str = '';
+
+// 	for (let i = 1; i <= time; i++) {
+// 		if (i === time) {
+// 			str += `${num * i}`;
+// 		} else {
+// 			str += `${num * i}---`;
+// 		}
+// 	}
+// 	return str;
+
+// }
+
+// getMathResult(10, 5)
 
